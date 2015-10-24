@@ -29,7 +29,30 @@ body, ul, li {
 	height: 15px;
 	background-color: red;
 }
-
+#hour, #min, #sec {
+	position: absolute;
+}
+#hour {
+	height: 50px;
+	width: 8px;
+	background-color: #000;
+	top: 100px;
+	left: 146px;
+}
+#min {
+	height: 80px;
+	width: 6px;
+	background-color: #888;
+	top: 70px;
+	left: 147px;
+}
+#sec {
+	height: 100px;
+	width: 4px;
+	background-color: red;
+	top: 50px;
+	left: 148px;
+}
 #center {
 	position: absolute;
 	width: 20px;
