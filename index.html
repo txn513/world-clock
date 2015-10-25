@@ -15,8 +15,21 @@
 		<div id="center"></div>
 	</div>
 	<script>
-		var oUl = document.getElementById('list');
-		var oCss = document.getElementById('css');
+	window.onload = function (){
+		createClock();
+		setInterval(getTime, 1000);
+		
+	}
+	var oHour = document.getElementById('hour');
+	var oMin = document.getElementById('min');
+	var oSec = document.getElementById('sec');
+	var oUl = document.getElementById('list');
+	var oCss = document.getElementById('css');
+	var myDate = null;
+	var myHour = null;
+	var myMin = null;
+	var mySec = null;
+	function createClock(){
 		var cssContent = null;
 		for(var i=0; i<60; i++){
 			oUl.innerHTML += "<li></li>";
@@ -24,9 +37,17 @@
 			+"){transform: rotate("+ (i*6) +"deg);}"
 		}
 		oCss.innerHTML += cssContent;
-		function getTime(){
-			
-		}
+	}
+	function getTime(){
+		myDate = new Date();
+		mySec = myDate.getSeconds();
+		myMin = myDate.getMinutes() + mySec/60;
+		myHour = myDate.getHours() + myMin/60;
+		
+		oHour.style.transform =  "rotate("+ (myHour*30) +"deg)";
+		oMin.style.transform =  "rotate("+ (myMin*6) +"deg)";
+		oSec.style.transform = "rotate("+ (mySec*6) +"deg)";
+	}
 
 	</script>
 </body>
