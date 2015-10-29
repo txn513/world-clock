@@ -16,39 +16,64 @@
 	</div>
 	<script>
 	window.onload = function (){
-		createClock();
-		setInterval(getTime, 1000);
-		
+		var c1 = new Clock();
+		c1.init({
+			hourColor: 'yellow',
+			minColor: '#000',
+			secColor: '#888'
+		});
 	}
-	var oHour = document.getElementById('hour');
-	var oMin = document.getElementById('min');
-	var oSec = document.getElementById('sec');
-	var oUl = document.getElementById('list');
-	var oCss = document.getElementById('css');
-	var myDate = null;
-	var myHour = null;
-	var myMin = null;
-	var mySec = null;
-	function createClock(){
-		var cssContent = null;
+	function Clock(){
+		this.oHour = document.getElementById('hour');
+		this.oMin = document.getElementById('min');
+		this.oSec = document.getElementById('sec');
+		this.oUl = document.getElementById('list');
+		this.oCss = document.getElementById('css');
+		this.myDate = null;
+		this.myHour = null;
+		this.myMin = null;
+		this.mySec = null;
+		this.cssContent = null;
+		this.setting = {
+			hourColor: '#000',
+			minColor: '#888',
+			secColor: 'red'
+		};
+	}
+	Clock.prototype.init = function(obj){
+		var This = this;
+		this.extend(this.setting, obj)
 		for(var i=0; i<60; i++){
-			oUl.innerHTML += "<li></li>";
-			cssContent += "#body li:nth-of-type("+ (i+1) 
+			this.oUl.innerHTML += "<li></li>";
+			this.cssContent += "#body li:nth-of-type("+ (i+1) 
 			+"){transform: rotate("+ (i*6) +"deg);}"
 		}
-		oCss.innerHTML += cssContent;
+		this.oCss.innerHTML += this.cssContent;
+		setInterval(function(){
+			This.getTime();
+		}, 1000);
+		this.setColor();
 	}
-	function getTime(){
-		myDate = new Date();
-		mySec = myDate.getSeconds();
-		myMin = myDate.getMinutes() + mySec/60;
-		myHour = myDate.getHours() + myMin/60;
+	Clock.prototype.getTime = function(){
+		this.myDate = new Date();
+		this.mySec = this.myDate.getSeconds();
+		this.myMin = this.myDate.getMinutes() + this.mySec/60;
+		this.myHour = this.myDate.getHours() + this.myMin/60;
 		
-		oHour.style.transform =  "rotate("+ (myHour*30) +"deg)";
-		oMin.style.transform =  "rotate("+ (myMin*6) +"deg)";
-		oSec.style.transform = "rotate("+ (mySec*6) +"deg)";
+		this.oHour.style.transform =  "rotate("+ (this.myHour*30) +"deg)";
+		this.oMin.style.transform =  "rotate("+ (this.myMin*6) +"deg)";
+		this.oSec.style.transform = "rotate("+ (this.mySec*6) +"deg)";
 	}
-
+	Clock.prototype.setColor = function(){
+		this.oHour.style.backgroundColor =  this.setting.hourColor;
+		this.oMin.style.backgroundColor =  this.setting.minColor;
+		this.oSec.style.backgroundColor = this.setting.scColor;
+	}
+	Clock.prototype.extend = function(obj1, obj2){
+		for(var attr in obj2){
+			obj1[attr] = obj2[attr];
+		};
+	}
 	</script>
 </body>
 </html>
